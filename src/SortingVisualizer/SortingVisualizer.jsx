@@ -28,8 +28,7 @@ export default class SortingVisualizer extends React.Component {
                 const [barOneIdx, barTwoIdx] = animations[i];
                 const barOneStyle = arrayBars[barOneIdx].style;
                 const barTwoStyle = arrayBars[barTwoIdx].style;
-                // const color = i % 3 === 0 ? 'red' : 'pink';
-                const color = 'pink';
+                const color = i % 4 === 0 ? 'red' : 'pink';
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
