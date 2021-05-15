@@ -32,13 +32,13 @@ export default class SortingVisualizer extends React.Component {
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
-                }, i * 3);
+                }, i * 1);
             } else {
                 setTimeout(() => {
                     const [barOneIdx, newHeight] = animations[i];
                     const barOneStyle = arrayBars[barOneIdx].style;
                     barOneStyle.height = `${newHeight}px`;
-                }, i * 3);
+                }, i * 1);
             }
 
         }
@@ -48,7 +48,7 @@ export default class SortingVisualizer extends React.Component {
 
     resetArray() {
         const array = [];
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 310; i++) {
             array.push(generateRandomNumber(5, 730));
         }
         this.setState({ array: array });
