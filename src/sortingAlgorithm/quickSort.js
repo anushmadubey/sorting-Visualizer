@@ -13,8 +13,12 @@ function partition(mainArray, low, high) {
     let pivot = mainArray[high];
 
     for(let j = low; j<=high; j++){
-
+        if(mainArray[j] <= pivot){
+            i++;
+            swap(mainArray, i, j);
+        }
     }
+    swap(mainArray, i+1, high)
 
 }
 
