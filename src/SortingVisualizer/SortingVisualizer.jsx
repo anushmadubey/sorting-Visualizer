@@ -2,6 +2,7 @@ import React from 'react';
 import './SortingVisualizer.scss';
 import { getMergeSortAnimations } from '../sortingAlgorithm/mergeSort.js';
 import { getBubbleSortAnimations } from '../sortingAlgorithm/bubbleSort';
+import { getQuickSortAnimations } from '../sortingAlgorithm/quickSort';
 
 
 export default class SortingVisualizer extends React.Component {
@@ -11,14 +12,51 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
         }
-
         this.resetArray = this.resetArray.bind(this);
         this.mergeSort = this.mergeSort.bind(this);
         this.bubbleSort = this.bubbleSort.bind(this);
+        this.testAlogrithm = this.testAlogrithm.bind(this);
+        this.quickSort = this.quickSort.bind(this);
     }
 
-    bubbleSort(){
-        console.log(this.state.array);
+    testAlogrithm() {
+        let theArray = this.state.array;
+        const ourArray = getQuickSortAnimations(theArray);
+        const calcArray = theArray.slice().sort((a, b) => a - b);
+        console.log(arraysAreEqual(ourArray, calcArray));
+
+        console.log(ourArray);
+        console.log(calcArray);
+    }
+
+    quickSort() {
+        const animations = getQuickSortAnimations(this.state.array);
+        console.log(animations);
+        for (let i = 0; i < animations.length; i++) {
+            console.log(animations[i]);
+            const isChangeColour = i % 3 != 2;
+            const arrayBars = document.getElementsByClassName('array-bar');
+            if (isChangeColour) {
+                const [barOneIdx, barTwoIdx] = animations[i];
+                const barOneStyle = arrayBars[barOneIdx].style;
+                const barTwoStyle = arrayBars[barTwoIdx].style;
+                const color = i % 3 === 0 ? 'red' : 'pink';
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = color;
+                    barTwoStyle.backgroundColor = color;
+                }, i * 3);
+            } else {
+                setTimeout(() => {
+                    const [barOneIdx, newHeight] = animations[i];
+                    const barOneStyle = arrayBars[barOneIdx].style;
+                    barOneStyle.height = `${newHeight}px`;
+                }, i * 3);
+            }
+
+        }
+    }
+
+    bubbleSort() {
         const animations = getBubbleSortAnimations(this.state.array);
         console.log(animations);
         for (let i = 0; i < animations.length; i++) {
@@ -43,12 +81,12 @@ export default class SortingVisualizer extends React.Component {
 
         }
 
-        
+
     }
 
     resetArray() {
         const array = [];
-        for (var i = 0; i < 310; i++) {
+        for (var i = 0; i < 100; i++) {
             array.push(generateRandomNumber(5, 730));
         }
         this.setState({ array: array });
@@ -74,7 +112,7 @@ export default class SortingVisualizer extends React.Component {
                     const [barOneIdx, newHeight] = animations[i];
                     const barOneStyle = arrayBars[barOneIdx].style;
                     barOneStyle.height = `${newHeight}px`;
-                }, i *3);
+                }, i * 3);
             }
 
         }
@@ -98,6 +136,8 @@ export default class SortingVisualizer extends React.Component {
                 <button onClick={this.resetArray}>Reset Array</button>
                 <button onClick={this.mergeSort}>Merge Sort</button>
                 <button onClick={this.bubbleSort}>Bubble Sort</button>
+                <button onClick={this.quickSort}>Quick Sort</button>
+                <button onClick={this.testAlogrithm}>Test Quick Sort</button>
             </div>
 
         );
@@ -111,10 +151,9 @@ function generateRandomNumber(min, max) {
 function arraysAreEqual(arrayOne, arrayTwo) {
     if (arrayOne.length !== arrayTwo.length) return false;
     for (let i = 0; i < arrayOne.length; i++) {
-      if (arrayOne[i] !== arrayTwo[i]) {
-        return false;
-      }
+        if (arrayOne[i] !== arrayTwo[i]) {
+            return false;
+        }
     }
     return true;
-  }
-  
+}
